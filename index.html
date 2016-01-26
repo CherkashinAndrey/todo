@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+<script src="controllers/list.js"></script>
+<script src="https://rawgithub.com/gsklee/ngStorage/master/ngStorage.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body> 
+<div class="wrap" ng-controller="Controller">
+	<div>
+		<div class="well">
+			<h2 class="alignCentre">Add new task</h2>
+			<div class="alignCentre">
+				<input type="text" id="actionText" class="formControl" placeholder="Add text tasks" ng-model="newTask.zadacha" ng-keyup="addTask(newTask)">
+			</div>
+		</div>
+
+		<div class='panel-heading'>
+			<h2 class="alignCentre">
+				not made tasks : 
+				<span class="taskColor">
+					{{(tasks | filter: {complete:'false'}).length}}
+				</span>
+			</h2>
+		</div>
+		<div>
+			<button class="btn" ng-click="myfiltre = all">All Task</button>
+			<button class="btn" ng-click="myfiltre = active">Active Task</button>
+			<button class="btn" ng-click="myfiltre = neactive">neactive Task</button>
+			<button class="btn btn-primary" ng-click="clearLocalStor()">ClearLocalStor</button>
+		</div>
+
+		<div class="panel-body">
+<!-- |filter:myfiltre -->
+        <ul class="task_list" class="unstyled">
+          <li ng-repeat="task in tasks |filter:myfiltre track by $index" ng-dblclick="dblClick(task)" class="task_li" >
+            <div ng-if="!task.toggle">
+              <input type="checkbox" ng-model="task.complete" ng-click="editCheck()"/>
+               <span class="task_{{task.complete}}">{{task.zadacha}}</span>
+              <button class="btn btn-danger delete " type="button" ng-click="remove(task)">Delete</button>
+            </div>
+            <input  ng-if="task.toggle" type="text" ng-model="task.zadacha" ng-keyup="editOnEnter(task)"/>  
+          </li>
+        </ul>
+
+		</div>
+	</div>
+
+</div>
+
+	
+</body>
+</html>
+
