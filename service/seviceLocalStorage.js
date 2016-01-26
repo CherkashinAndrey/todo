@@ -1,4 +1,4 @@
-myApp.service('ngStorage', function () {
+myApp.service('todoService', function () {
     var myObj = [];
 
     this.getStorage = function($scope, $window){
